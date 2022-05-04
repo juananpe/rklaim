@@ -115,56 +115,13 @@ public class DataAccess {
     db.close();
     System.out.println("DataBase is closed");
   }
-//
-//  public void createInvoice(Member member, float total, int month, int year) {
-//    db.getTransaction().begin();
-//    member.createInvoice(total, month, year);
-//    db.merge(member);
-//    db.getTransaction().commit();
-//  }
 
 
   public static void main(String[] args) {
 
     DataAccess da = new DataAccess(true);
 
-
-//    String name = "Oihane";
-//    TypedQuery<Member> query = da.db.createQuery(
-//        "SELECT m FROM Member m WHERE m.name = ?1", Member.class);
-//    Member oihane = query.setParameter(1, name).getSingleResult();
-//    da.close();
-//
-//    BlFacadeImplementation.getInstance().createInvoice(oihane, 4, 2022);
-//
-//    List<Court> courts = BlFacadeImplementation.getInstance().getCourts();
-//    List<Booking> books = BlFacadeImplementation.getInstance().getFreeBooks(courts.get(0), UtilDate.newDate(2022, 4, 27));
-//
-//    Booking book = books.get(0); // select the first free booking slot
-//    BlFacadeImplementation.getInstance().setBook(name, book);  // the first free slot for court:0 date:2022/04/27 will be assigned to Oihane
-//
-//    System.out.println(oihane);
-
   }
-
-//  public List<Court> getCourts() {
-//    TypedQuery<Court> query = db.createQuery(
-//        "SELECT c FROM Court c", Court.class);
-//    return query.getResultList();
-//  }
-//
-//
-//  public void setBook(String name, Booking book) {
-//    TypedQuery<Member> query = db.createQuery(
-//        "SELECT m FROM Member m WHERE m.name = ?1", Member.class);
-//    query.setParameter(1, name);
-//    Member member = query.getSingleResult();
-//
-//    db.getTransaction().begin();
-//    book.setBook(member);
-//    db.getTransaction().commit();
-//
-//  }
 
   // -------- Rklaim
   public Claim getClaim(int claimId) {
