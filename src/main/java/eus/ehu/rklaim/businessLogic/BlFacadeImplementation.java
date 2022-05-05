@@ -2,6 +2,7 @@ package eus.ehu.rklaim.businessLogic;
 
 import eus.ehu.rklaim.configuration.ConfigXML;
 import eus.ehu.rklaim.dataAccess.DataAccess;
+import eus.ehu.rklaim.domain.Action;
 import eus.ehu.rklaim.domain.Claim;
 
 
@@ -24,7 +25,8 @@ public class BlFacadeImplementation implements BlFacade {
 
   private BlFacadeImplementation() {
     System.out.println("Creating BlFacadeImplementation instance");
-    dbManager = new DataAccess();
+    boolean initialize = config.getDataBaseOpenMode().equals("initialize");
+    dbManager = new DataAccess(initialize);
     dbManager.close();
   }
 
@@ -54,10 +56,12 @@ public class BlFacadeImplementation implements BlFacade {
   }
 
   @Override
-  public void addAction(int officerId, Claim claim, String description) {
+  public Action addAction(int officerId, Claim claim, String description) {
     dbManager.open(false);
-    dbManager.addAction(officerId, claim, description, Calendar.getInstance().getTime());
+    Action action = dbManager.addAction(officerId, claim, description, Calendar.getInstance().getTime());
     dbManager.close();
+
+    return action;
   }
 
   @Override

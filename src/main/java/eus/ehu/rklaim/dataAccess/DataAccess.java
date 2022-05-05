@@ -135,17 +135,19 @@ public class DataAccess {
     claim.add(access);
   }
 
-  public void addAction(int officerId, Claim claim, String description, Date time) {
+  public Action addAction(int officerId, Claim claim, String description, Date time) {
+    Action action = null;
 
     db.getTransaction().begin();
     Claim attachedClaim = db.find(Claim.class, claim.getId());
     Officer officer = db.find(Officer.class, officerId);
     Officer assignedOfficer = claim.getOfficer();
     if (officer.equals(assignedOfficer)) {
-      Action action = attachedClaim.setAction(description, Calendar.getInstance().getTime());
+      action = attachedClaim.setAction(description, Calendar.getInstance().getTime());
       db.persist(action);
     }
     db.getTransaction().commit();
+    return action;
   }
 
   public void setResolution(int officerId, Claim claim, Claim.Resolution resolution) {

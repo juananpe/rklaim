@@ -1,5 +1,6 @@
 package eus.ehu.rklaim.businessLogic;
 
+import eus.ehu.rklaim.domain.Action;
 import eus.ehu.rklaim.domain.Claim;
 
 /**
@@ -9,6 +10,6 @@ public interface BlFacade  {
 
     // ===== Rklaim
     Claim getClaim(int officerId, int claimId);
-    void addAction(int officerId, Claim claim, String description);
+    Action addAction(int officerId, Claim claim, String description);
     void setResolution(int officerId, Claim claim, Claim.Resolution resolution);
 }
