@@ -132,7 +132,10 @@ public class DataAccess {
   public void createAccess(Claim claim, int officerId) {
     Officer officer = db.find(Officer.class, officerId);
     Access access = officer.createAccess(claim);
+    db.persist(access);
+    db.getTransaction().begin();
     claim.add(access);
+    db.getTransaction().commit();
   }
 
   public Action addAction(int officerId, Claim claim, String description, Date time) {
