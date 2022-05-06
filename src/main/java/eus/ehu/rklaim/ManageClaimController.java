@@ -62,15 +62,15 @@ public class ManageClaimController {
     System.out.println("Manage claim");
     claim = BlFacadeImplementation.getInstance().getClaim(1, 4);
     claimDesc.setText(claim.getDescription());
-    data.addAll(claim.getActions());
+    data.setAll(claim.getActions());
 
   }
 
   private void warnUser() {
-    Alert alert = new Alert(Alert.AlertType.WARNING);
+    Alert alert = new Alert(Alert.AlertType.ERROR);
     alert.setHeaderText(null);
     alert.setTitle("Warning");
-    alert.setContentText("This claim is not assigned to you");
+    alert.setContentText("You can't edit or add actions to a claim not assigned to you");
     alert.showAndWait();
   }
 
