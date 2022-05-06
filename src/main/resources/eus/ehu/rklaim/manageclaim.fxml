@@ -15,7 +15,7 @@
       <Label layoutX="203.0" layoutY="25.0" text="Claim ID" />
       <TextField fx:id="officerID" layoutX="105.0" layoutY="21.0" prefHeight="26.0" prefWidth="72.0" promptText="1" />
       <TextField fx:id="claimID" layoutX="259.0" layoutY="21.0" prefHeight="26.0" prefWidth="96.0" promptText="4" />
-      <Button layoutX="368.0" layoutY="21.0" mnemonicParsing="false" onAction="#manageclaim" text="Manage Claim" />
+      <Button layoutX="368.0" layoutY="21.0" mnemonicParsing="false" onAction="#manageClaim" text="Manage Claim" />
       <Label layoutX="30.0" layoutY="58.0" text="Claim Desc." />
       <TextArea fx:id="claimDesc" editable="false" layoutX="30.0" layoutY="75.0" prefHeight="62.0" prefWidth="437.0" />
       <TableView fx:id="actionTable" layoutX="30.0" layoutY="160.0" prefHeight="127.0" prefWidth="437.0">

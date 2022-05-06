@@ -4,14 +4,12 @@ import eus.ehu.rklaim.businessLogic.BlFacadeImplementation;
 import eus.ehu.rklaim.domain.Action;
 import eus.ehu.rklaim.domain.Claim;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableArray;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-import java.util.Calendar;
 import java.util.Date;
 
 public class ManageClaimController {
@@ -50,14 +48,17 @@ public class ManageClaimController {
   void setResolution(ActionEvent event) {
     Claim.Resolution resolution = comboResolution.getSelectionModel().getSelectedItem();
     if (resolution!=null){
-      BlFacadeImplementation.getInstance().setResolution(Integer.parseInt(officerID.getText()),claim,resolution);
-      lblSetResolution.setText("Resolution changed to " + resolution);
-      lblSetResolution.getStyleClass().setAll("lbl","lbl-success");
+      if (BlFacadeImplementation.getInstance().setResolution(Integer.parseInt(officerID.getText()),claim,resolution)) {
+        lblSetResolution.setText("Resolution changed to " + resolution);
+        lblSetResolution.getStyleClass().setAll("lbl", "lbl-success");
+      }else{
+        warnUser();
+      }
     }
   }
 
   @FXML
-  protected void manageclaim() {
+  protected void manageClaim() {
     System.out.println("Manage claim");
     claim = BlFacadeImplementation.getInstance().getClaim(1, 4);
     claimDesc.setText(claim.getDescription());
@@ -65,11 +66,23 @@ public class ManageClaimController {
 
   }
 
+  private void warnUser() {
+    Alert alert = new Alert(Alert.AlertType.WARNING);
+    alert.setHeaderText(null);
+    alert.setTitle("Warning");
+    alert.setContentText("This claim is not assigned to you");
+    alert.showAndWait();
+  }
+
   @FXML
   void addAction(ActionEvent event) {
     Action action = BlFacadeImplementation.getInstance().addAction(Integer.parseInt(officerID.getText()), claim, taArea.getText());
-    data.add(action);
-    taArea.clear();
+    if (action!=null) {
+      data.add(action);
+      taArea.clear();
+    }else{
+      warnUser();
+    }
   }
 
   @FXML

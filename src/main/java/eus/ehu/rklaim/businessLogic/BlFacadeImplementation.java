@@ -65,10 +65,11 @@ public class BlFacadeImplementation implements BlFacade {
   }
 
   @Override
-  public void setResolution(int officerId, Claim claim, Claim.Resolution resolution) {
+  public boolean setResolution(int officerId, Claim claim, Claim.Resolution resolution) {
     dbManager.open(false);
-    dbManager.setResolution(officerId, claim, resolution);
+    boolean ok = dbManager.setResolution(officerId, claim, resolution);
     dbManager.close();
+    return ok;
   }
 
   public static void main(String[] args) {

@@ -153,15 +153,17 @@ public class DataAccess {
     return action;
   }
 
-  public void setResolution(int officerId, Claim claim, Claim.Resolution resolution) {
+  public boolean setResolution(int officerId, Claim claim, Claim.Resolution resolution) {
+    boolean ok = false;
     db.getTransaction().begin();
     Officer officer = db.find(Officer.class, officerId);
     Claim attachedClaim = db.find(Claim.class, claim.getId());
     Officer assignedOfficer = claim.getOfficer();
     if (officer.equals(assignedOfficer)) {
       attachedClaim.setResolution(resolution);
+      ok = true;
     }
     db.getTransaction().commit();
-
+    return ok;
   }
 }
