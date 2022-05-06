@@ -1,5 +1,5 @@
 # rklaim
-Rklaim / Use Case: Process Claim
+Rklaim / Use Case: Manage Claim
 
 * Execute the application. It will create by default a new Claim with ID:4 assigned to the Officer with ID:1
 * Add some actions to the claim or change the resolution. It should work.
