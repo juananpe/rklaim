@@ -89,7 +89,7 @@ $JAVA_HOME/bin/jpackage \
 --type $INSTALLER_TYPE \
 --dest target/installer \
 --input target/installer/input/libs \
---name JPackageScriptFX \
+--name RKlaim \
 --main-class eus.ehu.rklaim.Main \
 --main-jar ${MAIN_JAR} \
 --java-options -Xmx2048m \

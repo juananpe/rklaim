@@ -113,7 +113,7 @@
                 <version>0.0.8</version>
 
                         <configuration>
-                            <mainClass>eus.ehu.rklaim.ManageClaim</mainClass>
+                            <mainClass>eus.ehu.rklaim.Main</mainClass>
                         </configuration>
 
             </plugin>

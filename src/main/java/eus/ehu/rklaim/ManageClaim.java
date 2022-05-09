@@ -8,13 +8,16 @@ import javafx.stage.Stage;
 import org.kordamp.bootstrapfx.BootstrapFX;
 
 import java.io.IOException;
+import java.net.URL;
 
 public class ManageClaim extends Application {
 
 
   @Override
   public void start(Stage stage) throws IOException {
-    FXMLLoader fxmlLoader = new FXMLLoader(ManageClaim.class.getResource("manageclaim.fxml"));
+    URL url = ManageClaim.class.getResource("manageclaim.fxml");
+    System.out.println(url);
+    FXMLLoader fxmlLoader = new FXMLLoader(url);
     Parent root = fxmlLoader.load();
     // ManageClaimController controller = fxmlLoader.getController();
 
