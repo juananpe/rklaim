@@ -143,12 +143,9 @@ public class ConfigXML {
 	 */
 	private File getFile(){
 		String userHome = System.getProperty("user.home");
-		String userDir = System.getProperty("user.home");
-		System.out.println("UserHome:" + userHome);
-		System.out.println("UserDir:" + userDir);
 
 		if (Files.exists(Paths.get(userHome + "/" + CONFIGURATION_FILENAME))) {
-			return new File(CONFIGURATION_FILENAME);
+			return new File(userHome + "/" + CONFIGURATION_FILENAME);
 		} else {
 			return new File(CONFIGURATION_FILENAME);
 		}
