@@ -37,7 +37,7 @@ echo detecting required modules
   --multi-release %JAVA_VERSION% ^
   --ignore-missing-deps ^
   --class-path "target\installer\input\libs\*" ^
-  --print-module-deps target\classes\com\dlsc\jpackagefx\App.class > temp.txt
+  --print-module-deps target\classes\eus\ehu\rklaim\Main.class > temp.txt
 
 set /p detected_modules=<temp.txt
 

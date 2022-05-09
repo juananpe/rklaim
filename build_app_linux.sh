@@ -44,7 +44,7 @@ detected_modules=`$JAVA_HOME/bin/jdeps \
   --ignore-missing-deps \
   --print-module-deps \
   --class-path "target/installer/input/libs/*" \
-    target/classes/com/dlsc/jpackagefx/App.class`
+    target/classes/eus/ehu/rklaim/Main.class`
 echo "detected modules: ${detected_modules}"
 
 
