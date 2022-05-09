@@ -6,3 +6,6 @@ Rklaim / Use Case: Manage Claim
 * Now, Change the officer ID and try to get info about the same claim. Then, try to add an action or change resolution: it should inform you that you can't do that (you are not the officer assigned to the claim)
 
 Edit `config/config.xml` file to open the DB in open mode (by default it will be opened in initialize mode)
+
+# CONFIGURATION 
+Once installed, you need to create a `config/config.xml` file in your $HOME directory. You can use [this one](https://github.com/juananpe/rklaim/blob/main/config/config.xml) as a template
