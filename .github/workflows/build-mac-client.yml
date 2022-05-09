@@ -25,9 +25,9 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: DMG file
-        path: jpackagefx-main/target/installer/*.dmg
+        path: rklaim/target/installer/*.dmg
     - name: Upload PKG
       uses: actions/upload-artifact@v2
       with:
         name: PKG file
-        path: jpackagefx-main/target/installer/*.pkg
+        path: rklaim/target/installer/*.pkg

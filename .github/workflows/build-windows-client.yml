@@ -25,4 +25,4 @@ jobs:
       uses: actions/upload-artifact@v2
       with:
         name: MSI file
-        path: jpackagefx-main/target/installer/*.msi
+        path: rklaim/target/installer/*.msi

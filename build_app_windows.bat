@@ -84,7 +84,7 @@ call "%JAVA_HOME%\bin\jpackage" ^
   --type %INSTALLER_TYPE% ^
   --dest target/installer ^
   --input target/installer/input/libs ^
-  --name JPackageScriptFX ^
+  --name Rklaim ^
   --main-class eus.ehu.rklaim.Main ^
   --main-jar %MAIN_JAR% ^
   --java-options -Xmx2048m ^
