@@ -60,7 +60,7 @@ echo "detected modules: ${detected_modules}"
 #
 # Don't forget the leading ','!
 
-manual_modules=,jdk.crypto.ec,jdk.localedata,java.xml,java.scripting,jdk.unsupported
+manual_modules=,jdk.crypto.ec,jdk.localedata,java.xml,java.scripting,jdk.unsupported,java.naming,java.desktop,java.management,java.sql
 echo "manual modules: ${manual_modules}"
 
 # ------ RUNTIME IMAGE ------------------------------------------------------
