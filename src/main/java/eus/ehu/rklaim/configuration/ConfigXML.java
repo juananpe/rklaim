@@ -11,6 +11,9 @@ import java.io.File;
 import java.io.InputStream;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 
 /**
@@ -133,12 +136,27 @@ public class ConfigXML {
 
 	}
 
+	/**
+	 * Will try to search for the configuration file in $HOME/config/config.xml
+	 * and if that fails, in $PROJECT/config/config.xml
+	 * @return File
+	 */
+	private File getFile(){
+		String userHome = System.getProperty("user.home");
+		if (Files.exists(Paths.get(userHome + "/" + CONFIGURATION_FILENAME))) {
+			return new File(CONFIGURATION_FILENAME);
+		} else {
+			return new File(CONFIGURATION_FILENAME);
+		}
+	}
+
+
 	private ConfigXML(){
 
 		try {
 			DocumentBuilderFactory dbFactory = DocumentBuilderFactory.newInstance();
 			DocumentBuilder dBuilder = dbFactory.newDocumentBuilder();
-			Document doc = dBuilder.parse(new File(CONFIGURATION_FILENAME));
+			Document doc = dBuilder.parse(getFile());
 
 
 			// Document doc = dBuilder.parse(getFileFromResourceAsStream("config.xml"));
