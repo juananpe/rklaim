@@ -85,14 +85,14 @@ call "%JAVA_HOME%\bin\jpackage" ^
   --dest target/installer ^
   --input target/installer/input/libs ^
   --name JPackageScriptFX ^
-  --main-class com.dlsc.jpackagefx.AppLauncher ^
+  --main-class eus.ehu.rklaim.Main ^
   --main-jar %MAIN_JAR% ^
   --java-options -Xmx2048m ^
   --runtime-image target/java-runtime ^
   --icon src/main/logo/windows/duke.ico ^
   --app-version %APP_VERSION% ^
-  --vendor "ACME Inc." ^
-  --copyright "Copyright © 2019-21 ACME Inc." ^
+  --vendor "UPV/EHU" ^
+  --copyright "Copyright © 2021-21 Juanan Pereira" ^
   --win-dir-chooser ^
   --win-shortcut ^
   --win-per-user-install ^
