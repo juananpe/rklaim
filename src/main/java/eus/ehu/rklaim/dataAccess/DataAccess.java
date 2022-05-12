@@ -93,7 +93,7 @@ public class DataAccess {
 
     String fileName = config.getDataBaseFilename();
 
-    if (Files.exists(Paths.get(System.getProperty("user.home") + "/config/" + fileName))) {
+    if (Files.exists(Paths.get(System.getProperty("user.home") + "/config/"))) {
       System.out.println("Opening db from user.home");
       fileName = System.getProperty("user.home") + "/config/" + fileName;
     }
