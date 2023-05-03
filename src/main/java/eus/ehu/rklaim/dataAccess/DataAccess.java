@@ -1,15 +1,12 @@
 package eus.ehu.rklaim.dataAccess;
 
 import eus.ehu.rklaim.configuration.Config;
-import eus.ehu.rklaim.configuration.ConfigXML;
 import eus.ehu.rklaim.configuration.UtilDate;
 import eus.ehu.rklaim.domain.*;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
-import java.nio.file.Files;
-import java.nio.file.Paths;
+
 import java.util.*;
 
 

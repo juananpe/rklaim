@@ -20,6 +20,12 @@ public class ManageClaimController {
   private Claim claim;
 
   @FXML
+  TextField claimTxt;
+
+  @FXML
+  TextField officerTxt;
+
+  @FXML
   private TableView<Action> actionTable;
 
   @FXML
@@ -39,16 +45,13 @@ public class ManageClaimController {
 
 
   @FXML
-  private TextField officerID;
-
-  @FXML
   private ComboBox<Claim.Resolution> comboResolution;
 
   @FXML
   void setResolution(ActionEvent event) {
     Claim.Resolution resolution = comboResolution.getSelectionModel().getSelectedItem();
     if (resolution!=null){
-      if (BlFacadeImplementation.getInstance().setResolution(Integer.parseInt(officerID.getText()),claim,resolution)) {
+      if (BlFacadeImplementation.getInstance().setResolution(Integer.parseInt(officerTxt.getText()),claim,resolution)) {
         lblSetResolution.setText("Resolution changed to " + resolution);
         lblSetResolution.getStyleClass().setAll("lbl", "lbl-success");
       }else{
@@ -60,7 +63,10 @@ public class ManageClaimController {
   @FXML
   protected void manageClaim() {
     System.out.println("Manage claim");
-    claim = BlFacadeImplementation.getInstance().getClaim(1, 4);
+    int officerId = Integer.parseInt(officerTxt.getText());
+    int claimId = Integer.parseInt(claimTxt.getText());
+
+    claim = BlFacadeImplementation.getInstance().getClaim(officerId, claimId);
     claimDesc.setText(claim.getDescription());
     data.setAll(claim.getActions());
 
@@ -76,7 +82,7 @@ public class ManageClaimController {
 
   @FXML
   void addAction(ActionEvent event) {
-    Action action = BlFacadeImplementation.getInstance().addAction(Integer.parseInt(officerID.getText()), claim, taArea.getText());
+    Action action = BlFacadeImplementation.getInstance().addAction(Integer.parseInt(officerTxt.getText()), claim, taArea.getText());
     if (action!=null) {
       data.add(action);
       taArea.clear();

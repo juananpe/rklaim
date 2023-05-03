@@ -1,6 +1,6 @@
 package eus.ehu.rklaim.businessLogic;
 
-import eus.ehu.rklaim.configuration.ConfigXML;
+import eus.ehu.rklaim.configuration.Config;
 import eus.ehu.rklaim.dataAccess.DataAccess;
 import eus.ehu.rklaim.domain.Action;
 import eus.ehu.rklaim.domain.Claim;
@@ -15,7 +15,7 @@ import java.util.Calendar;
 public class BlFacadeImplementation implements BlFacade {
 
     DataAccess dbManager;
-    ConfigXML config = ConfigXML.getInstance();
+    Config config = Config.getInstance();
 
     private static BlFacadeImplementation bl = new BlFacadeImplementation();
 
