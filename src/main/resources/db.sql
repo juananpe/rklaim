@@ -20,6 +20,15 @@ create table "Officer"
         primary key (ID)
 );
 
+create table "PublicService"
+(
+    ID          BIGINT auto_increment,
+    DEPARTMENT  CHARACTER VARYING,
+    INSTITUTION CHARACTER VARYING,
+    constraint "PublicService_pk"
+        primary key (ID)
+);
+
 create table "Claim"
 (
     NUMBER                 BIGINT not null,
@@ -30,8 +39,11 @@ create table "Claim"
     RESOLUTION             CHARACTER VARYING,
     OFFICER                BIGINT,
     CITIZEN                BIGINT,
+    "publicService"        BIGINT,
     constraint "Claim_pk"
         primary key (NUMBER),
+    constraint "CLAIM_PublicService__FK"
+        foreign key (NUMBER) references "PublicService",
     constraint "Claim_Officer_fk"
         foreign key (OFFICER) references "Officer",
     constraint "Claim__Citizen_fk"
@@ -62,14 +74,5 @@ create table "Action"
         primary key (ID),
     constraint "ACTION_Claim__FK"
         foreign key (CLAIM) references "Claim"
-);
-
-create table "PublicService"
-(
-    ID          BIGINT auto_increment,
-    DEPARTMENT  CHARACTER VARYING,
-    INSTITUTION CHARACTER VARYING,
-    constraint "PublicService_pk"
-        primary key (ID)
 );
 
