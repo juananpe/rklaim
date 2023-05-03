@@ -1,15 +1,23 @@
 package eus.ehu.rklaim.dataAccess;
 
+import eus.ehu.rklaim.configuration.Config;
 import eus.ehu.rklaim.configuration.ConfigXML;
 import eus.ehu.rklaim.configuration.UtilDate;
 import eus.ehu.rklaim.domain.*;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.Persistence;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.util.*;
+
+
+import org.hibernate.boot.MetadataSources;
+import org.hibernate.boot.registry.StandardServiceRegistry;
+import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
+
+
 
 /**
  * Implements the Data Access utility to the objectDb database
@@ -19,22 +27,55 @@ public class DataAccess {
   protected EntityManager db;
   protected EntityManagerFactory emf;
 
-  ConfigXML config = ConfigXML.getInstance();
+  public DataAccess() {
 
-  public DataAccess(boolean initializeMode) {
-    System.out.println("Creating DataAccess instance => isDatabaseLocal: " +
-        config.isDataAccessLocal() + " getDatabBaseOpenMode: " + config.getDataBaseOpenMode());
-    open(initializeMode);
+    this.open();
 
+  }
+
+  public void open() {
+    open(false);
+  }
+
+
+  public void open(boolean initializeMode) {
+
+    Config config = Config.getInstance();
+
+    System.out.println("Opening DataAccess instance => isDatabaseLocal: " +
+            config.isDataAccessLocal() + " getDatabBaseOpenMode: " + config.getDataBaseOpenMode());
+
+    String fileName = config.getDatabaseName();
     if (initializeMode) {
-      initializeDB();
+      fileName = fileName + ";drop";
+      System.out.println("Deleting the DataBase");
+    }
+
+    if (config.isDataAccessLocal()) {
+      final StandardServiceRegistry registry = new StandardServiceRegistryBuilder()
+              .configure() // configures settings from hibernate.cfg.xml
+              .build();
+      try {
+        emf = new MetadataSources(registry).buildMetadata().buildSessionFactory();
+      } catch (Exception e) {
+        // The registry would be destroyed by the SessionFactory, but we had trouble building the SessionFactory
+        // so destroy it manually.
+        StandardServiceRegistryBuilder.destroy(registry);
+      }
+
+      db = emf.createEntityManager();
+      System.out.println("DataBase opened");
     }
   }
 
-  public DataAccess() {
-    this(false);
-  }
 
+
+  public void reset() {
+    db.getTransaction().begin();
+//    db.createQuery("DELETE FROM Citizen").executeUpdate();
+//    db.createQuery("DELETE FROM Officer").executeUpdate();
+    db.getTransaction().commit();
+  }
 
   /**
    * This method initializes the database with some trial events and questions.
@@ -43,6 +84,7 @@ public class DataAccess {
    */
   public void initializeDB() {
 
+    this.reset();
 
     try {
 
@@ -58,6 +100,7 @@ public class DataAccess {
       e.printStackTrace();
     }
   }
+
 
 
   private void generateTestingData() {
@@ -86,50 +129,10 @@ public class DataAccess {
   }
 
 
-  public void open(boolean initializeMode) {
-
-    System.out.println("Opening DataAccess instance => isDatabaseLocal: " +
-        config.isDataAccessLocal() + " getDatabBaseOpenMode: " + config.getDataBaseOpenMode());
-
-    String fileName = config.getDataBaseFilename();
-
-    if (Files.exists(Paths.get(System.getProperty("user.home") + "/config/"))) {
-      System.out.println("Opening db from user.home");
-      fileName = System.getProperty("user.home") + "/config/" + fileName;
-    }
-    System.setProperty("objectdb.home", System.getProperty("user.home") + "/config"); // new $objectdb
-
-    if (initializeMode) {
-      fileName = fileName + ";drop";
-      System.out.println("Deleting the DataBase");
-    }
-
-    if (config.isDataAccessLocal()) {
-      emf = Persistence.createEntityManagerFactory("objectdb:" + fileName);
-      db = emf.createEntityManager();
-    } else {
-      Map<String, String> properties = new HashMap<String, String>();
-      properties.put("javax.persistence.jdbc.user", config.getDataBaseUser());
-      properties.put("javax.persistence.jdbc.password", config.getDataBasePassword());
-
-      emf = Persistence.createEntityManagerFactory("objectdb://" + config.getDataAccessNode() +
-          ":" + config.getDataAccessPort() + "/" + fileName, properties);
-
-      db = emf.createEntityManager();
-    }
-  }
-
 
   public void close() {
     db.close();
     System.out.println("DataBase is closed");
-  }
-
-
-  public static void main(String[] args) {
-
-    DataAccess da = new DataAccess(true);
-
   }
 
   // -------- Rklaim

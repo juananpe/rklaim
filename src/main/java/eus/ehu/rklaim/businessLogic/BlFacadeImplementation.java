@@ -14,71 +14,58 @@ import java.util.Calendar;
  */
 public class BlFacadeImplementation implements BlFacade {
 
-  DataAccess dbManager;
-  ConfigXML config = ConfigXML.getInstance();
+    DataAccess dbManager;
+    ConfigXML config = ConfigXML.getInstance();
 
-  private static BlFacadeImplementation bl = new BlFacadeImplementation();
+    private static BlFacadeImplementation bl = new BlFacadeImplementation();
 
-  public static BlFacadeImplementation getInstance() {
-    return bl;
-  }
+    public static BlFacadeImplementation getInstance() {
+        return bl;
+    }
 
-  private BlFacadeImplementation() {
-    System.out.println("Creating BlFacadeImplementation instance");
-    boolean initialize = config.getDataBaseOpenMode().equals("initialize");
-    dbManager = new DataAccess(initialize);
-    dbManager.close();
-  }
+    private BlFacadeImplementation() {
+        System.out.println("Creating BlFacadeImplementation instance");
+        boolean initialize = config.getDataBaseOpenMode().equals("initialize");
+        dbManager = new DataAccess();
+        if (initialize)
+            dbManager.initializeDB();
+        dbManager.close();
+    }
 
+    // rklaim -------------
+    @Override
+    public Claim getClaim(int officerId, int claimId) {
+        dbManager.open(false);
+        Claim claim = dbManager.getClaim(claimId);
+        dbManager.createAccess(claim, officerId);
+        dbManager.close();
+        return claim;
+    }
 
-  public void close() {
-    dbManager.close();
-  }
+    @Override
+    public Action addAction(int officerId, Claim claim, String description) {
+        dbManager.open(false);
+        Action action = dbManager.addAction(officerId, claim, description, Calendar.getInstance().getTime());
+        dbManager.close();
 
-  /**
-   * This method invokes the data access to initialize the database with some events and questions.
-   * It is invoked only when the option "initialize" is declared in the tag dataBaseOpenMode of resources/config.xml file
-   */
-  public void initializeBD() {
-    dbManager.open(false);
-    dbManager.initializeDB();
-    dbManager.close();
-  }
+        return action;
+    }
 
-  // rklaim -------------
-  @Override
-  public Claim getClaim(int officerId, int claimId) {
-    dbManager.open(false);
-    Claim claim = dbManager.getClaim(claimId);
-    dbManager.createAccess(claim, officerId);
-    dbManager.close();
-    return claim;
-  }
+    @Override
+    public boolean setResolution(int officerId, Claim claim, Claim.Resolution resolution) {
+        dbManager.open(false);
+        boolean ok = dbManager.setResolution(officerId, claim, resolution);
+        dbManager.close();
+        return ok;
+    }
 
-  @Override
-  public Action addAction(int officerId, Claim claim, String description) {
-    dbManager.open(false);
-    Action action = dbManager.addAction(officerId, claim, description, Calendar.getInstance().getTime());
-    dbManager.close();
+    public static void main(String[] args) {
+        int officerId = 1;
+        int claimId = 4;
 
-    return action;
-  }
+        Claim claim = BlFacadeImplementation.getInstance().getClaim(officerId, claimId);
+        BlFacadeImplementation.getInstance().addAction(officerId, claim, "an email has been sent to the treasury registry");
+        BlFacadeImplementation.getInstance().setResolution(officerId, claim, Claim.Resolution.UPHELD);
 
-  @Override
-  public boolean setResolution(int officerId, Claim claim, Claim.Resolution resolution) {
-    dbManager.open(false);
-    boolean ok = dbManager.setResolution(officerId, claim, resolution);
-    dbManager.close();
-    return ok;
-  }
-
-  public static void main(String[] args) {
-    int officerId = 1;
-    int claimId = 4;
-
-    Claim claim = BlFacadeImplementation.getInstance().getClaim(officerId, claimId);
-    BlFacadeImplementation.getInstance().addAction(officerId, claim, "an email has been sent to the treasury registry");
-    BlFacadeImplementation.getInstance().setResolution(officerId,claim, Claim.Resolution.UPHELD);
-
-  }
+    }
 }

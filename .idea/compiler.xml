@@ -9,8 +9,5 @@
         <module name="rklaim" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="rklaim" target="17" />
-    </bytecodeTargetLevel>
   </component>
 </project>

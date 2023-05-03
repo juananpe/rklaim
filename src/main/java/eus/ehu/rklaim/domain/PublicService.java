@@ -1,6 +1,6 @@
 package eus.ehu.rklaim.domain;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,6 +13,10 @@ public class PublicService {
   private String institution;
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   private List<Claim> claims = new ArrayList<>();
+
+  public PublicService() {
+
+  }
 
   public Long getId() {
     return id;

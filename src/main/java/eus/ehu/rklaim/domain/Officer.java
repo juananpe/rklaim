@@ -1,12 +1,16 @@
 package eus.ehu.rklaim.domain;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 public class Officer {
 
+
+  public Officer() {
+
+  }
 
   public Category getCategory() {
     return category;

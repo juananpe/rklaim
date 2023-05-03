@@ -1,6 +1,6 @@
 package eus.ehu.rklaim.domain;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -35,14 +35,6 @@ public class Claim {
   @Enumerated(EnumType.ORDINAL)
   private Resolution resolution;
 
-  public Claim(Citizen citizen, String description, Date dateTimeClaimedEvent) {
-    this.dateTimeFiling = Calendar.getInstance().getTime();
-    this.citizen = citizen;
-    this.description = description;
-    this.dateTimeClaimedEvent = dateTimeClaimedEvent;
-    this.status = Status.NOT_ASSIGNED;
-
-  }
 
   @OneToOne(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   private Citizen citizen;
@@ -55,6 +47,16 @@ public class Claim {
 
   @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.MERGE)
   private List<Access> accesses = new ArrayList<>();
+
+
+  public Claim(Citizen citizen, String description, Date dateTimeClaimedEvent) {
+    this.dateTimeFiling = Calendar.getInstance().getTime();
+    this.citizen = citizen;
+    this.description = description;
+    this.dateTimeClaimedEvent = dateTimeClaimedEvent;
+    this.status = Status.NOT_ASSIGNED;
+
+  }
 
   public PublicService getPublicService() {
     return publicService;
